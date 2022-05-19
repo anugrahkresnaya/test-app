@@ -14,22 +14,31 @@ on:
   workflow_dispatch:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  install:
-    name: "react-scripts"
+  deploy:
+    # Operating system to run job on
     runs-on: ubuntu-latest
+    # Steps in job
     steps:
-      - name : install reac-scripts command
-        run : cd .. && npm install
-  unit-test:
-    name: "unit test"
-    runs-on: "ubuntu-latest"
-    steps:
-      - name: Setup Node.js
+      # Get code from repo
+      - name: Checkout code
+        uses: actions/checkout@v1
+      # Install NodeJS
+      - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
-      - name: running unit test
-        run: npm run test
+          node-version: 12.x
+      # Run npm install and build on our code
+      - run: npm install
+      - run: npm run build --if-present
+      # Deploy to Netlify using our production secrets
+      - name: Deploy to netlify
+        uses: netlify/actions/cli@master
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        with:
+          args: deploy --dir=build --prod
+          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
