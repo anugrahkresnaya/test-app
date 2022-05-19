@@ -18,7 +18,10 @@ jobs:
     name: "unit test"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
       - name: running unit test
         run: npm run test
   # This workflow contains a single job called "build"
