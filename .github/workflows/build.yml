@@ -14,6 +14,12 @@ on:
   workflow_dispatch:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  install:
+    name: "react-scripts"
+    runs-on: ubuntu-latest
+    steps:
+      - name : install reac-scripts command
+        run : npm install
   unit-test:
     name: "unit test"
     runs-on: "ubuntu-latest"
