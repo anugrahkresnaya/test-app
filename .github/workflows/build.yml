@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name : install reac-scripts command
-        run : npm install
+        run : cd .. && npm install
   unit-test:
     name: "unit test"
     runs-on: "ubuntu-latest"
