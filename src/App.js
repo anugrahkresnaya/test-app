@@ -22,5 +22,4 @@ function App() {
   );
 }
 
-const giphy_secret = process.env.REACT_APP_GIPHY_KEY;
 export default App;
